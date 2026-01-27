@@ -1,0 +1,22 @@
+<div class = "text-center">
+<h2>Nhập thông tin sinh viên</h2>
+
+<form asp-action="index" asp-controller="demo" method="post">
+    <label>Mã sinh viên:</label>
+    <input type="text" name="MSV" />
+
+    <br />
+
+    <label>Họ tên:</label>
+    <input type="text" name="FullName" />
+
+    <br />
+
+    <button type="submit">Gửi</button>
+</form>
+
+@if (ViewBag.name != null)
+{
+    <p>Hello @ViewBag.name - @ViewBag.MSV</p>
+}
+</div>
