@@ -1,0 +1,15 @@
+@model DemoMvc.Models.Entities.Student
+<h2>Form thêm mới dữ liệu Sinh viên</h2>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Mã sinh viên</label>
+        <input type="text" class="form-control" name="StudentCode" placeholder="Nhập mã sinh viên">
+    </div>
+    <div class="form-group">
+        <label>Tên sinh viên</label>
+        <input type="text" class="form-control" name="FullName" placeholder="Nhập tên sinh viên">
+    </div>
+    <div class="form-group">
+        <input type="submit" class="form-control" value="Create new Student">
+    </div>
+</form>

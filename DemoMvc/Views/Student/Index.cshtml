@@ -1,6 +1,23 @@
-<h2>Student View index: @ViewBag.ThongBao</h2>
-<form asp-action="Index" method="post">
-    <input type="text" name="StudentCode" placeholder="Nhập mã sinh viên của bạn" />
-    <input type="text" name="FullName" placeholder="Nhập họ tên của bạn" />
-    <button type="submit">Gửi dữ liệu</button>
-</form>
+@model IEnumerable<DemoMvc.Models.Entities.Student>
+<h2>Danh sach sinh vien</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student Code</th>
+            <th>Full Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.StudentCode</td>
+                <td>@student.FullName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@student.StudentCode">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@student.StudentCode">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>

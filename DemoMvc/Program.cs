@@ -1,13 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using DemoMvc.Models.Entities;
-using DemoMvc.Data; // Thư mục chứa ApplicationDbContext
-
+using DemoMvc.Data;
 var builder = WebApplication.CreateBuilder(args);
-
-// Cấu hình DbContext với SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -32,6 +28,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+// http://localhost:5262/controller/Action/
+// http://localhost:5262/ <=> http://localhost:5262/Home/
+// http://localhost:5262/Demo/Test
 
 app.Run();
-

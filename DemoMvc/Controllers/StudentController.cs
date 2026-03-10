@@ -1,38 +1,71 @@
 using Microsoft.AspNetCore.Mvc;
+using DemoMvc.Data;
 using DemoMvc.Models.Entities;
-using DemoMvc.Data; // Thêm dòng này để Controller thấy được DbContext
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 namespace DemoMvc.Controllers
 {
-    public class StudentController : Controller
-{
-    // 1. Khai báo DbContext
-    private readonly ApplicationDbContext _context;
-
-    public StudentController(ApplicationDbContext context)
+    public class StudentController(ApplicationDbContext context) : Controller
     {
-        _context = context;
-    }
-
-    [HttpGet]
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Index(Student std)
-    {
-        if (ModelState.IsValid)
+        private readonly ApplicationDbContext _context = context;
+        public IActionResult Index()
         {
-            // 2. Thêm vào bảng Students
-            _context.Add(std);
-            
-            // 3. LƯU THAY ĐỔI XUỐNG FILE .DB (Cực kỳ quan trọng)
-            await _context.SaveChangesAsync();
-
-            ViewBag.ThongBao = "Đã lưu thành công sinh viên: " + std.FullName + " - Mã: " + std.StudentCode;
+            // Lấy danh sách sinh viên từ cơ sở dữ liệu
+            var listStudents = _context.Students.ToList();
+            //truyen danh sách sinh viên vào view
+            return View(listStudents);
         }
-        return View();
-    }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Student std)
+        {
+            _context.Students.Add(std);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Edit(string id)
+        {
+            //Tim sinh viên theo mã sinh viên
+            var std = await _context.Students.FindAsync(id);
+            if (std == null)
+            {
+                return NotFound();
+            }
+            return View(std);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Student std)
+        {
+            _context.Entry(std).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        // 1. Action hiển thị trang xác nhận xóa (HttpGet)
+public async Task<IActionResult> Delete(string id)
+{
+    if (id == null) return NotFound();
+
+    var std = await _context.Students.FindAsync(id);
+    if (std == null) return NotFound();
+
+    return View(std);
 }
+
+// 2. Action thực hiện việc xóa sau khi nhấn nút xác nhận (HttpPost)
+[HttpPost, ActionName("Delete")]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> DeleteConfirmed(string id)
+{
+    var std = await _context.Students.FindAsync(id);
+    if (std != null)
+    {
+        _context.Students.Remove(std); // Lệnh xóa bản ghi
+        await _context.SaveChangesAsync(); // Lưu thay đổi xuống database
+    }
+    return RedirectToAction(nameof(Index));
+}
+    }
 }
