@@ -1,10 +1,14 @@
 @model IEnumerable<DemoMvc.Models.Entities.Student>
 <h2>Danh sach sinh vien</h2>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Student</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>Student Code</th>
             <th>Full Name</th>
+            <th>Age</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -14,6 +18,7 @@
             <tr>
                 <td>@student.StudentCode</td>
                 <td>@student.FullName</td>
+                <td>@student.Age</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@student.StudentCode">Edit</a> |
                     <a asp-action="Delete" asp-route-id="@student.StudentCode">Delete</a>

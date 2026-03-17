@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = "Không thể tạo mới";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4 text-danger font-weight-bold">404 - Dữ liệu không hợp lệ</h1>
+    <i class="bi bi-exclamation-octagon-fill text-warning" style="font-size: 4rem;"></i>
+    
+    <div class="alert alert-warning mt-4">
+        <h3>Mã sinh viên đã tồn tại!</h3>
+        <p>Hệ thống không thể tạo sinh viên mới vì mã này đã được sử dụng bởi một người khác.</p>
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="Student" asp-action="Create" class="btn btn-primary">Thử lại với mã khác</a>
+        <a asp-controller="Student" asp-action="Index" class="btn btn-secondary">Quay về danh sách</a>
+    </div>
+</div>

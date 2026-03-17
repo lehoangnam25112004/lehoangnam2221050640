@@ -1,17 +1,26 @@
 @model DemoMvc.Models.Entities.Student
 <h2>Form sửa dữ liệu Sinh viên</h2>
 <form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label>Mã sinh viên</label>
-        <input type="text" class="form-control" name="StudentCode" placeholder="Nhập mã sinh viên"
-               value="@Model.StudentCode">
+        <label asp-for="StudentCode">Mã sinh viên</label>
+        <input type="text" class="form-control" asp-for="StudentCode" placeholder="Nhập mã sinh viên">
+        <span asp-validation-for="StudentCode" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label>Tên sinh viên</label>
-        <input type="text" class="form-control" name="FullName" placeholder="Nhập tên sinh viên"
-               value="@Model.FullName">
+        <label asp-for="FullName">Tên sinh viên</label>
+        <input type="text" class="form-control" asp-for="FullName" placeholder="Nhập tên sinh viên">
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Age">Tuổi</label>
+        <input type="number" class="form-control" asp-for="Age" placeholder="Nhập tuổi">
+        <span asp-validation-for="Age" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" class="form-control" value="Update Student">
     </div>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
