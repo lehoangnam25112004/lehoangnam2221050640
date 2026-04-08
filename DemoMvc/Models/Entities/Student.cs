@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 namespace DemoMvc.Models.Entities
 {
@@ -15,5 +16,11 @@ namespace DemoMvc.Models.Entities
 
         [Range(0, 150, ErrorMessage = "Tuổi phải là số từ 0 đến 150")]
         public int? Age { get; set; }
+
+        // Thêm vào dưới dòng Age (dòng 17)
+    public int ClassId { get; set; }
+
+    [ForeignKey("ClassId")]
+    public virtual Class? Class { get; set; }
     }
 }

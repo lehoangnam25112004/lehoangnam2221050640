@@ -1,28 +1,47 @@
-@model IEnumerable<DemoMvc.Models.Entities.Student>
-<h2>Danh sach sinh vien</h2>
+@model IEnumerable<DemoMvc.Models.ViewModels.StudentVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New Student</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>Student Code</th>
-            <th>Full Name</th>
-            <th>Age</th>
-            <th>Actions</th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassName)
+            </th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var student in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@student.StudentCode</td>
-                <td>@student.FullName</td>
-                <td>@student.Age</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@student.StudentCode">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@student.StudentCode">Delete</a>
+                    @Html.DisplayFor(modelItem => item.StudentCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassName)
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.StudentCode">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.StudentCode">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.StudentCode">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
+</table>
