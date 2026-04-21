@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Import Excel";
+}
+
+<h2>Import danh sách Sinh viên từ Excel</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Import" method="post" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label class="form-label">Chọn file Excel (.xlsx):</label>
+                <input type="file" name="file" class="form-control" accept=".xlsx, .xls" />
+            </div>
+            
+            <button type="submit" class="btn btn-success">Tải lên và Lưu</button>
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        </form>
+    </div>
+</div>

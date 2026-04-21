@@ -5,5 +5,6 @@ namespace DemoMvc.Models.ViewModels
         public string StudentCode { get; set; } = default!;
         public string FullName { get; set; } = default!;
         public string ClassName { get; set; } = default!;
+        public int? Age { get; set; }
     }
 }

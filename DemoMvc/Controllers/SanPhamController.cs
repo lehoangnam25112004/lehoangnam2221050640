@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DemoMvc.Data;
 using DemoMvc.Models.Entities;
+using OfficeOpenXml;
+using System.IO;
 
 namespace DemoMvc.Controllers
 {
@@ -153,5 +155,44 @@ namespace DemoMvc.Controllers
         {
             return _context.SanPhams.Any(e => e.MaSP == id);
         }
+
+    [HttpGet]
+    public IActionResult Import()
+    {
+        return View();
+    }
+
+            [HttpPost]
+    public async Task<IActionResult> Import(IFormFile file)
+    {
+        if (file == null || file.Length == 0) return BadRequest("Vui lòng chọn file.");
+
+        ExcelPackage.License.SetNonCommercialPersonal("Nam");
+        using (var stream = new MemoryStream())
+        {
+            await file.CopyToAsync(stream);
+            using (var package = new ExcelPackage(stream))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                int rowCount = worksheet.Dimension.Rows;
+
+                for (int row = 2; row <= rowCount; row++) // Đọc từ dòng 2 (bỏ qua tiêu đề)
+                {
+                    var sp = new SanPham
+                    {
+                        // Cột 1 trong Excel là TenSP
+                        TenSP = worksheet.Cells[row, 1].Value?.ToString(),
+                        
+                        // Cột 2 trong Excel là Gia (Ép kiểu về decimal)
+                        Gia = decimal.Parse(worksheet.Cells[row, 2].Value?.ToString() ?? "0")
+                    };
+                    
+                    _context.SanPhams.Add(sp);
+                }
+                await _context.SaveChangesAsync();
+            }
+        }
+        return RedirectToAction(nameof(Index));
+    }
     }
 }
