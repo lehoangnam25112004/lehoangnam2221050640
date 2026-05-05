@@ -14,32 +14,22 @@ namespace DemoMvc.Data
 
         public DbSet<Class> Classes { get; set; }
 
-        public DbSet<KhachHang> KhachHangs { get; set; }
-        public DbSet<SanPham> SanPhams { get; set; }
-        public DbSet<DonHang> DonHangs { get; set; }
-        public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<ProductList> ProductLists { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    base.OnModelCreating(modelBuilder);
+        
 
-    // 1. Liên kết Khách hàng - Đơn hàng (1-N)
-    modelBuilder.Entity<DonHang>()
-        .HasOne(d => d.KhachHang)
-        .WithMany(k => k.DonHangs)
-        .HasForeignKey(d => d.MaKH);
+        // Các bảng mới cho bài Quản lý kho thiết bị điện tử
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ImportTicket> ImportTickets { get; set; }
+        public DbSet<ImportDetail> ImportDetails { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<ExportTicket> ExportTickets { get; set; }
+        public DbSet<ExportDetail> ExportDetails { get; set; }
 
-    // 2. Liên kết Đơn hàng - Chi tiết đơn hàng (1-N)
-    modelBuilder.Entity<ChiTietDonHang>()
-        .HasOne(ct => ct.DonHang)
-        .WithMany(d => d.ChiTietDonHangs)
-        .HasForeignKey(ct => ct.MaDH);
-
-    // 3. Liên kết Sản phẩm - Chi tiết đơn hàng (1-N)
-    modelBuilder.Entity<ChiTietDonHang>()
-        .HasOne(ct => ct.SanPham)
-        .WithMany() // Nếu bên SanPham không tạo ICollection thì để trống WithMany
-        .HasForeignKey(ct => ct.MaSP);
-}
+        
     }
 }
