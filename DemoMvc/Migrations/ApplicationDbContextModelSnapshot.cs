@@ -17,28 +17,19 @@ namespace DemoMvc.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
 
-            modelBuilder.Entity("DemoMvc.Models.Entities.ChiTietDonHang", b =>
+            modelBuilder.Entity("DemoMvc.Models.Entities.Category", b =>
                 {
-                    b.Property<int>("MaCT")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MaDH")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("MaSP")
-                        .HasColumnType("INTEGER");
+                    b.HasKey("Id");
 
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("MaCT");
-
-                    b.HasIndex("MaDH");
-
-                    b.HasIndex("MaSP");
-
-                    b.ToTable("ChiTietDonHangs");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("DemoMvc.Models.Entities.Class", b =>
@@ -56,59 +47,212 @@ namespace DemoMvc.Migrations
                     b.ToTable("Classes");
                 });
 
-            modelBuilder.Entity("DemoMvc.Models.Entities.DonHang", b =>
+            modelBuilder.Entity("DemoMvc.Models.Entities.Customers", b =>
                 {
-                    b.Property<int>("MaDH")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MaKH")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("NgayDat")
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("MaDH");
-
-                    b.HasIndex("MaKH");
-
-                    b.ToTable("DonHangs");
-                });
-
-            modelBuilder.Entity("DemoMvc.Models.Entities.KhachHang", b =>
-                {
-                    b.Property<int>("MaKH")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("DienThoai")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TenKH")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("MaKH");
+                    b.HasKey("CustomerId");
 
-                    b.ToTable("KhachHangs");
+                    b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("DemoMvc.Models.Entities.SanPham", b =>
+            modelBuilder.Entity("DemoMvc.Models.Entities.ExportDetail", b =>
                 {
-                    b.Property<int>("MaSP")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Gia")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("ExportTicketId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("TenSP")
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExportTicketId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ExportDetails");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.ExportTicket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ExportDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReceiverName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExportTickets");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.ImportDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ImportTicketId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImportTicketId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ImportDetails");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.ImportTicket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ImportDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ImportTickets");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OrderDetailId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("MaSP");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("SanPhams");
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.ProductList", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("ProductLists");
                 });
 
             modelBuilder.Entity("DemoMvc.Models.Entities.Student", b =>
@@ -135,34 +279,104 @@ namespace DemoMvc.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("DemoMvc.Models.Entities.ChiTietDonHang", b =>
+            modelBuilder.Entity("DemoMvc.Models.Entities.Supplier", b =>
                 {
-                    b.HasOne("DemoMvc.Models.Entities.DonHang", "DonHang")
-                        .WithMany("ChiTietDonHangs")
-                        .HasForeignKey("MaDH")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.HasOne("DemoMvc.Models.Entities.SanPham", "SanPham")
-                        .WithMany()
-                        .HasForeignKey("MaSP")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
 
-                    b.Navigation("DonHang");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Navigation("SanPham");
+                    b.Property<string>("Phone")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("DemoMvc.Models.Entities.DonHang", b =>
+            modelBuilder.Entity("DemoMvc.Models.Entities.ExportDetail", b =>
                 {
-                    b.HasOne("DemoMvc.Models.Entities.KhachHang", "KhachHang")
-                        .WithMany("DonHangs")
-                        .HasForeignKey("MaKH")
+                    b.HasOne("DemoMvc.Models.Entities.ExportTicket", "ExportTicket")
+                        .WithMany("ExportDetails")
+                        .HasForeignKey("ExportTicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("KhachHang");
+                    b.HasOne("DemoMvc.Models.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExportTicket");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.ImportDetail", b =>
+                {
+                    b.HasOne("DemoMvc.Models.Entities.ImportTicket", "ImportTicket")
+                        .WithMany("ImportDetails")
+                        .HasForeignKey("ImportTicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DemoMvc.Models.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ImportTicket");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.Order", b =>
+                {
+                    b.HasOne("DemoMvc.Models.Entities.Customers", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.OrderDetail", b =>
+                {
+                    b.HasOne("DemoMvc.Models.Entities.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DemoMvc.Models.Entities.ProductList", "Product")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.Product", b =>
+                {
+                    b.HasOne("DemoMvc.Models.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("DemoMvc.Models.Entities.Student", b =>
@@ -176,19 +390,39 @@ namespace DemoMvc.Migrations
                     b.Navigation("Class");
                 });
 
+            modelBuilder.Entity("DemoMvc.Models.Entities.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("DemoMvc.Models.Entities.Class", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("DemoMvc.Models.Entities.DonHang", b =>
+            modelBuilder.Entity("DemoMvc.Models.Entities.Customers", b =>
                 {
-                    b.Navigation("ChiTietDonHangs");
+                    b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("DemoMvc.Models.Entities.KhachHang", b =>
+            modelBuilder.Entity("DemoMvc.Models.Entities.ExportTicket", b =>
                 {
-                    b.Navigation("DonHangs");
+                    b.Navigation("ExportDetails");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.ImportTicket", b =>
+                {
+                    b.Navigation("ImportDetails");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("DemoMvc.Models.Entities.ProductList", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }
