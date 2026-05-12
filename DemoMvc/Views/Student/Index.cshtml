@@ -1,54 +1,23 @@
-@model IEnumerable<DemoMvc.Models.ViewModels.StudentVM>
+<div class="container mt-4">
 
-@{
-    ViewData["Title"] = "Index";
+    <h2>Student Management</h2>
+
+    <div id="studentTableContainer">
+
+    </div>
+
+</div>
+
+<div id="modalContainer"></div>
+
+@section Scripts {
+
+    <script src="~/js/student/student.js"></script>
+
+    <script src="~/js/student/student-create.js"></script>
+
+    <script src="~/js/student/student-edit.js"></script>
+
+    <script src="~/js/student/student-delete.js"></script>
+
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClassName)
-            </th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td> 
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClassName)
-                </td>       
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.StudentCode">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.StudentCode">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.StudentCode">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>

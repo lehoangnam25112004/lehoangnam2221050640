@@ -30,6 +30,8 @@ namespace DemoMvc.Data
         public DbSet<ExportTicket> ExportTickets { get; set; }
         public DbSet<ExportDetail> ExportDetails { get; set; }
 
+        public DbSet<Book> Books { get; set; }
+
         
     }
 }
